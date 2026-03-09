@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js_ext_comx_test-native-win", "js_ext_comx_test-native-win.vcxproj", "{9F8F302A-C95B-B33B-6120-79DB0F44D35B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{86F75023-71B7-35B6-8C3E-A2101D623C23} = {86F75023-71B7-35B6-8C3E-A2101D623C23}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nothing", "..\node_modules\node-addon-api\src\nothing.vcxproj", "{86F75023-71B7-35B6-8C3E-A2101D623C23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(dciplocal)", "..\dciplocal", "{B6A527FF-7ADE-0884-13AC-EC187DB30B4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(comx_sdk.node)", "..\dciplocal\comx_sdk.node", "{6C7717D1-5198-70A1-3B3F-9FF21C6CD1CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(src)", "..\dciplocal\comx_sdk.node\src", "{C541D3D6-CFFC-6197-26B6-12943BB4CA13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(js_ext)", "..\dciplocal\comx_sdk.node\src\js_ext", "{C96DA822-9478-7D22-EFA7-5CA15B001785}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(js_ext_comx_test)", "..\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_test", "{681FC873-22D4-75A2-E74A-9E7631719A63}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(node_modules)", "..\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_test\node_modules", "{C479503A-F502-F15C-7786-90CF68BCF34E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(node-addon-api)", "..\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_test\node_modules\node-addon-api", "{716CB1EB-B618-4063-AADD-31B365D069B9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(src)", "..\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_test\node_modules\node-addon-api\src", "{9338206F-6F45-FFF1-C22C-2E736FAC55E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86F75023-71B7-35B6-8C3E-A2101D623C23}.Debug|x64.ActiveCfg = Debug|x64
+		{86F75023-71B7-35B6-8C3E-A2101D623C23}.Debug|x64.Build.0 = Debug|x64
+		{86F75023-71B7-35B6-8C3E-A2101D623C23}.Release|x64.ActiveCfg = Release|x64
+		{86F75023-71B7-35B6-8C3E-A2101D623C23}.Release|x64.Build.0 = Release|x64
+		{9F8F302A-C95B-B33B-6120-79DB0F44D35B}.Debug|x64.ActiveCfg = Debug|x64
+		{9F8F302A-C95B-B33B-6120-79DB0F44D35B}.Debug|x64.Build.0 = Debug|x64
+		{9F8F302A-C95B-B33B-6120-79DB0F44D35B}.Release|x64.ActiveCfg = Release|x64
+		{9F8F302A-C95B-B33B-6120-79DB0F44D35B}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6C7717D1-5198-70A1-3B3F-9FF21C6CD1CD} = {B6A527FF-7ADE-0884-13AC-EC187DB30B4A}
+		{C541D3D6-CFFC-6197-26B6-12943BB4CA13} = {6C7717D1-5198-70A1-3B3F-9FF21C6CD1CD}
+		{C96DA822-9478-7D22-EFA7-5CA15B001785} = {C541D3D6-CFFC-6197-26B6-12943BB4CA13}
+		{681FC873-22D4-75A2-E74A-9E7631719A63} = {C96DA822-9478-7D22-EFA7-5CA15B001785}
+		{C479503A-F502-F15C-7786-90CF68BCF34E} = {681FC873-22D4-75A2-E74A-9E7631719A63}
+		{716CB1EB-B618-4063-AADD-31B365D069B9} = {C479503A-F502-F15C-7786-90CF68BCF34E}
+		{9338206F-6F45-FFF1-C22C-2E736FAC55E7} = {716CB1EB-B618-4063-AADD-31B365D069B9}
+		{86F75023-71B7-35B6-8C3E-A2101D623C23} = {9338206F-6F45-FFF1-C22C-2E736FAC55E7}
+	EndGlobalSection
+EndGlobal

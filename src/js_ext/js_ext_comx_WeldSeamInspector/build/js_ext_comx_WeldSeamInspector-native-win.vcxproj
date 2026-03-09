@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{1FD13755-AA33-6B32-8E7A-015A85CFE76D}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>js_ext_comx_WeldSeamInspector-native-win</RootNamespace>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Locals">
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props"/>
+  <ImportGroup Label="ExtensionSettings"/>
+  <ImportGroup Label="PropertySheets">
+    <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props"/>
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros"/>
+  <PropertyGroup>
+    <ExecutablePath>$(ExecutablePath);$(MSBuildProjectDirectory)\..\bin\;$(MSBuildProjectDirectory)\..\bin\</ExecutablePath>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <IntDir>$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.node</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.node</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.node</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.node</TargetExt>
+    <TargetName>$(ProjectName)</TargetName>
+    <TargetPath>$(OutDir)\$(ProjectName).node</TargetPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\include\node;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\src;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\config;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\openssl\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\uv\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\zlib;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\v8\include;D:\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_WeldSeamInspector\node_modules\node-addon-api;D:\dciplocal\comx_sdk.node\include;..\src;D:\OCC\opencascade-7.5.0\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zc:__cplusplus -std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <DisableSpecificWarnings>4351;4355;4800;4251;4275;4244;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>false</OmitFramePointers>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>NODE_GYP_MODULE_NAME=js_ext_comx_WeldSeamInspector-native-win;USING_UV_SHARED=1;USING_V8_SHARED=1;V8_DEPRECATION_WARNINGS=1;V8_DEPRECATION_WARNINGS;V8_IMMINENT_DEPRECATION_WARNINGS;_GLIBCXX_USE_CXX11_ABI=1;WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_HAS_EXCEPTIONS=0;OPENSSL_NO_PINSHARED;OPENSSL_THREADS;SUPPORT_NODE_API;BUILDING_NODE_EXTENSION;HOST_BINARY=&quot;node.exe&quot;;DEBUG;_DEBUG;V8_ENABLE_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level3</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG:INCREMENTAL %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;DelayImp.lib;&quot;C:\\Users\\91313\\AppData\\Local\\node-gyp\\Cache\\18.16.1\\x64\\node.lib&quot;;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBin.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBinL.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBinTObj.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBinXCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBO.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBool.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBRep.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKCDF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKD3DHost.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKDCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKDFBrowser.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKDraw.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKernel.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKFeat.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKFillet.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKG2d.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKG3d.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKGeomAlgo.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKGeomBase.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKHLR.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKIGES.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKIVtk.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKIVtkDraw.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKLCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKMath.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKMesh.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKMeshVS.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKOffset.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKOpenGl.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKPrim.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKQADraw.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKRWMesh.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKService.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKShapeView.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKShHealing.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKStd.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKStdL.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKSTEP.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKSTEP209.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKSTEPAttr.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKSTEPBase.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKSTL.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTInspector.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTInspectorAPI.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTObj.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTObjDRAW.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKToolsDraw.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTopAlgo.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTopTest.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTreeModel.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKV3d.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKVCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKView.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKViewerTest.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKVInspector.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKVRML.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXDEDRAW.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXDEIGES.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXDESTEP.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXMesh.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXml.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXmlL.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXmlTObj.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXmlXCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXSBase.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXSDRAW.lib</AdditionalDependencies>
+      <AdditionalOptions>/LTCG:INCREMENTAL /ignore:4199 %(AdditionalOptions)</AdditionalOptions>
+      <DelayLoadDLLs>node.exe;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <OutputFile>$(OutDir)$(ProjectName).node</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetExt>.node</TargetExt>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\include\node;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\src;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\config;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\openssl\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\uv\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\zlib;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\v8\include;D:\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_WeldSeamInspector\node_modules\node-addon-api;D:\dciplocal\comx_sdk.node\include;..\src;D:\OCC\opencascade-7.5.0\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NODE_GYP_MODULE_NAME=js_ext_comx_WeldSeamInspector-native-win;USING_UV_SHARED=1;USING_V8_SHARED=1;V8_DEPRECATION_WARNINGS=1;V8_DEPRECATION_WARNINGS;V8_IMMINENT_DEPRECATION_WARNINGS;_GLIBCXX_USE_CXX11_ABI=1;WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_HAS_EXCEPTIONS=0;OPENSSL_NO_PINSHARED;OPENSSL_THREADS;SUPPORT_NODE_API;BUILDING_NODE_EXTENSION;HOST_BINARY=&quot;node.exe&quot;;DEBUG;_DEBUG;V8_ENABLE_CHECKS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\include\node;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\src;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\config;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\openssl\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\uv\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\zlib;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\v8\include;D:\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_WeldSeamInspector\node_modules\node-addon-api;D:\dciplocal\comx_sdk.node\include;..\src;D:\OCC\opencascade-7.5.0\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zc:__cplusplus -std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <DisableSpecificWarnings>4351;4355;4800;4251;4275;4244;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>true</OmitFramePointers>
+      <Optimization>Full</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>NODE_GYP_MODULE_NAME=js_ext_comx_WeldSeamInspector-native-win;USING_UV_SHARED=1;USING_V8_SHARED=1;V8_DEPRECATION_WARNINGS=1;V8_DEPRECATION_WARNINGS;V8_IMMINENT_DEPRECATION_WARNINGS;_GLIBCXX_USE_CXX11_ABI=1;WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_HAS_EXCEPTIONS=0;OPENSSL_NO_PINSHARED;OPENSSL_THREADS;SUPPORT_NODE_API;BUILDING_NODE_EXTENSION;HOST_BINARY=&quot;node.exe&quot;;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level3</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG:INCREMENTAL %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;DelayImp.lib;&quot;C:\\Users\\91313\\AppData\\Local\\node-gyp\\Cache\\18.16.1\\x64\\node.lib&quot;;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBin.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBinL.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBinTObj.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBinXCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBO.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBool.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKBRep.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKCDF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKD3DHost.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKDCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKDFBrowser.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKDraw.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKernel.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKFeat.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKFillet.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKG2d.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKG3d.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKGeomAlgo.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKGeomBase.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKHLR.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKIGES.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKIVtk.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKIVtkDraw.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKLCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKMath.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKMesh.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKMeshVS.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKOffset.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKOpenGl.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKPrim.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKQADraw.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKRWMesh.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKService.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKShapeView.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKShHealing.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKStd.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKStdL.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKSTEP.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKSTEP209.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKSTEPAttr.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKSTEPBase.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKSTL.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTInspector.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTInspectorAPI.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTObj.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTObjDRAW.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKToolsDraw.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTopAlgo.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTopTest.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKTreeModel.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKV3d.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKVCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKView.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKViewerTest.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKVInspector.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKVRML.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXDEDRAW.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXDEIGES.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXDESTEP.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXMesh.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXml.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXmlL.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXmlTObj.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXmlXCAF.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXSBase.lib;D:\OCC\opencascade-7.5.0\win64\vc14\lib\TKXSDRAW.lib</AdditionalDependencies>
+      <AdditionalOptions>/LTCG:INCREMENTAL /ignore:4199 %(AdditionalOptions)</AdditionalOptions>
+      <DelayLoadDLLs>node.exe;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <OutputFile>$(OutDir)$(ProjectName).node</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetExt>.node</TargetExt>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\include\node;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\src;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\config;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\openssl\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\uv\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\zlib;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\v8\include;D:\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_WeldSeamInspector\node_modules\node-addon-api;D:\dciplocal\comx_sdk.node\include;..\src;D:\OCC\opencascade-7.5.0\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NODE_GYP_MODULE_NAME=js_ext_comx_WeldSeamInspector-native-win;USING_UV_SHARED=1;USING_V8_SHARED=1;V8_DEPRECATION_WARNINGS=1;V8_DEPRECATION_WARNINGS;V8_IMMINENT_DEPRECATION_WARNINGS;_GLIBCXX_USE_CXX11_ABI=1;WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_HAS_EXCEPTIONS=0;OPENSSL_NO_PINSHARED;OPENSSL_THREADS;SUPPORT_NODE_API;BUILDING_NODE_EXTENSION;HOST_BINARY=&quot;node.exe&quot;;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="..\binding.gyp"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\js_ext_comx_WeldSeamInspector.cc">
+      <ObjectFileName>$(IntDir)\src\js_ext_comx_WeldSeamInspector.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="C:\Users\91313\AppData\Roaming\npm\node_modules\node-gyp\src\win_delay_load_hook.cc"/>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\node_modules\node-addon-api\src\nothing.vcxproj">
+      <Project>{0965C0C7-53A0-E41D-45A9-1072CEA038A3}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets"/>
+  <ImportGroup Label="ExtensionTargets"/>
+</Project>

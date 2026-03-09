@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js_ext_comx_WeldSeamInspector-native-win", "js_ext_comx_WeldSeamInspector-native-win.vcxproj", "{1FD13755-AA33-6B32-8E7A-015A85CFE76D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0965C0C7-53A0-E41D-45A9-1072CEA038A3} = {0965C0C7-53A0-E41D-45A9-1072CEA038A3}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nothing", "..\node_modules\node-addon-api\src\nothing.vcxproj", "{0965C0C7-53A0-E41D-45A9-1072CEA038A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(dciplocal)", "..\dciplocal", "{B6A527FF-7ADE-0884-13AC-EC187DB30B4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(comx_sdk.node)", "..\dciplocal\comx_sdk.node", "{6C7717D1-5198-70A1-3B3F-9FF21C6CD1CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(src)", "..\dciplocal\comx_sdk.node\src", "{C541D3D6-CFFC-6197-26B6-12943BB4CA13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(js_ext)", "..\dciplocal\comx_sdk.node\src\js_ext", "{C96DA822-9478-7D22-EFA7-5CA15B001785}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(js_ext_comx_WeldSeamInspector)", "..\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_WeldSeamInspector", "{6152E384-06D1-C20D-93C0-0BFF69F8EFC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(node_modules)", "..\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_WeldSeamInspector\node_modules", "{013F8861-7160-0DB7-8748-AC252340AFCE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(node-addon-api)", "..\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_WeldSeamInspector\node_modules\node-addon-api", "{884D38A6-F4FE-0B61-ECCC-819C07D781EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(src)", "..\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_WeldSeamInspector\node_modules\node-addon-api\src", "{E701D63A-4615-7FA4-93F2-1751D35907E0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Release|x64 = Release|x64
+		Debug|x64 = Debug|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0965C0C7-53A0-E41D-45A9-1072CEA038A3}.Release|x64.ActiveCfg = Release|x64
+		{0965C0C7-53A0-E41D-45A9-1072CEA038A3}.Release|x64.Build.0 = Release|x64
+		{0965C0C7-53A0-E41D-45A9-1072CEA038A3}.Debug|x64.ActiveCfg = Debug|x64
+		{0965C0C7-53A0-E41D-45A9-1072CEA038A3}.Debug|x64.Build.0 = Debug|x64
+		{1FD13755-AA33-6B32-8E7A-015A85CFE76D}.Release|x64.ActiveCfg = Release|x64
+		{1FD13755-AA33-6B32-8E7A-015A85CFE76D}.Release|x64.Build.0 = Release|x64
+		{1FD13755-AA33-6B32-8E7A-015A85CFE76D}.Debug|x64.ActiveCfg = Debug|x64
+		{1FD13755-AA33-6B32-8E7A-015A85CFE76D}.Debug|x64.Build.0 = Debug|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6C7717D1-5198-70A1-3B3F-9FF21C6CD1CD} = {B6A527FF-7ADE-0884-13AC-EC187DB30B4A}
+		{C541D3D6-CFFC-6197-26B6-12943BB4CA13} = {6C7717D1-5198-70A1-3B3F-9FF21C6CD1CD}
+		{C96DA822-9478-7D22-EFA7-5CA15B001785} = {C541D3D6-CFFC-6197-26B6-12943BB4CA13}
+		{6152E384-06D1-C20D-93C0-0BFF69F8EFC6} = {C96DA822-9478-7D22-EFA7-5CA15B001785}
+		{013F8861-7160-0DB7-8748-AC252340AFCE} = {6152E384-06D1-C20D-93C0-0BFF69F8EFC6}
+		{884D38A6-F4FE-0B61-ECCC-819C07D781EF} = {013F8861-7160-0DB7-8748-AC252340AFCE}
+		{E701D63A-4615-7FA4-93F2-1751D35907E0} = {884D38A6-F4FE-0B61-ECCC-819C07D781EF}
+		{0965C0C7-53A0-E41D-45A9-1072CEA038A3} = {E701D63A-4615-7FA4-93F2-1751D35907E0}
+	EndGlobalSection
+EndGlobal

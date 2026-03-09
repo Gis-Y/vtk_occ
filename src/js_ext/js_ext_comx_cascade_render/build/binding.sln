@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "js_ext_comx_cascade_render-native-win", "js_ext_comx_cascade_render-native-win.vcxproj", "{96FFE65D-0E20-B2BB-ED02-754D3F4956B3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BD588A39-614A-EA0B-64C0-EB090304D194} = {BD588A39-614A-EA0B-64C0-EB090304D194}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nothing", "..\node_modules\node-addon-api\src\nothing.vcxproj", "{BD588A39-614A-EA0B-64C0-EB090304D194}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(dciplocal)", "..\dciplocal", "{B6A527FF-7ADE-0884-13AC-EC187DB30B4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(comx_sdk.node)", "..\dciplocal\comx_sdk.node", "{6C7717D1-5198-70A1-3B3F-9FF21C6CD1CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(src)", "..\dciplocal\comx_sdk.node\src", "{C541D3D6-CFFC-6197-26B6-12943BB4CA13}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(js_ext)", "..\dciplocal\comx_sdk.node\src\js_ext", "{C96DA822-9478-7D22-EFA7-5CA15B001785}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(js_ext_comx_cascade_render)", "..\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_cascade_render", "{6C32E023-EB1D-2130-F9F1-DD1502D125EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(node_modules)", "..\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_cascade_render\node_modules", "{1BC945C1-29C1-3E34-05B8-2C3B29693CC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(node-addon-api)", "..\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_cascade_render\node_modules\node-addon-api", "{53D91BFB-23EA-9466-D939-EDD718322232}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(src)", "..\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_cascade_render\node_modules\node-addon-api\src", "{E1C94596-B7E3-4F54-58D1-87195FD31578}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{96FFE65D-0E20-B2BB-ED02-754D3F4956B3}.Debug|x64.ActiveCfg = Debug|x64
+		{96FFE65D-0E20-B2BB-ED02-754D3F4956B3}.Debug|x64.Build.0 = Debug|x64
+		{96FFE65D-0E20-B2BB-ED02-754D3F4956B3}.Release|x64.ActiveCfg = Release|x64
+		{96FFE65D-0E20-B2BB-ED02-754D3F4956B3}.Release|x64.Build.0 = Release|x64
+		{BD588A39-614A-EA0B-64C0-EB090304D194}.Debug|x64.ActiveCfg = Debug|x64
+		{BD588A39-614A-EA0B-64C0-EB090304D194}.Debug|x64.Build.0 = Debug|x64
+		{BD588A39-614A-EA0B-64C0-EB090304D194}.Release|x64.ActiveCfg = Release|x64
+		{BD588A39-614A-EA0B-64C0-EB090304D194}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6C7717D1-5198-70A1-3B3F-9FF21C6CD1CD} = {B6A527FF-7ADE-0884-13AC-EC187DB30B4A}
+		{C541D3D6-CFFC-6197-26B6-12943BB4CA13} = {6C7717D1-5198-70A1-3B3F-9FF21C6CD1CD}
+		{C96DA822-9478-7D22-EFA7-5CA15B001785} = {C541D3D6-CFFC-6197-26B6-12943BB4CA13}
+		{6C32E023-EB1D-2130-F9F1-DD1502D125EA} = {C96DA822-9478-7D22-EFA7-5CA15B001785}
+		{1BC945C1-29C1-3E34-05B8-2C3B29693CC0} = {6C32E023-EB1D-2130-F9F1-DD1502D125EA}
+		{53D91BFB-23EA-9466-D939-EDD718322232} = {1BC945C1-29C1-3E34-05B8-2C3B29693CC0}
+		{E1C94596-B7E3-4F54-58D1-87195FD31578} = {53D91BFB-23EA-9466-D939-EDD718322232}
+		{BD588A39-614A-EA0B-64C0-EB090304D194} = {E1C94596-B7E3-4F54-58D1-87195FD31578}
+	EndGlobalSection
+EndGlobal

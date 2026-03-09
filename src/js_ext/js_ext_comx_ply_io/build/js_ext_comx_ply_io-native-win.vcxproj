@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{46D27C2A-A4E0-4ECD-A44C-E8AC3922F662}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>js_ext_comx_ply_io-native-win</RootNamespace>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Locals">
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="PropertySheets">
+    <Import Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <ExecutablePath>$(ExecutablePath);$(MSBuildProjectDirectory)\..\bin\;$(MSBuildProjectDirectory)\..\bin\</ExecutablePath>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
+    <IntDir>$(Configuration)\obj\$(ProjectName)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.node</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.node</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.node</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.node</TargetExt>
+    <TargetName>$(ProjectName)</TargetName>
+    <TargetPath>$(OutDir)\$(ProjectName).node</TargetPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\include\node;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\src;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\config;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\openssl\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\uv\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\zlib;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\v8\include;D:\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_ply_io\node_modules\node-addon-api;D:\dciplocal\comx_sdk.node\include;..\src;D:\VTK\include\vtk-9.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zc:__cplusplus -std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <DisableSpecificWarnings>4351;4355;4800;4251;4275;4244;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <MinimalRebuild>false</MinimalRebuild>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>false</OmitFramePointers>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>NODE_GYP_MODULE_NAME=js_ext_comx_ply_io-native-win;USING_UV_SHARED=1;USING_V8_SHARED=1;V8_DEPRECATION_WARNINGS=1;V8_DEPRECATION_WARNINGS;V8_IMMINENT_DEPRECATION_WARNINGS;_GLIBCXX_USE_CXX11_ABI=1;WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_HAS_EXCEPTIONS=0;OPENSSL_NO_PINSHARED;OPENSSL_THREADS;SUPPORT_NODE_API;BUILDING_NODE_EXTENSION;HOST_BINARY="node.exe";DEBUG;_DEBUG;V8_ENABLE_CHECKS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level3</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG:INCREMENTAL %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;DelayImp.lib;"C:\\Users\\91313\\AppData\\Local\\node-gyp\\Cache\\18.16.1\\x64\\node.lib";D:\VTK\lib\vtkRenderingAnnotation-9.3.lib;D:\VTK\lib\vtkRenderingContext2D-9.3.lib;D:\VTK\lib\vtkRenderingContextOpenGL2-9.3.lib;D:\VTK\lib\vtkRenderingCore-9.3.lib;D:\VTK\lib\vtkRenderingExternal-9.3.lib;D:\VTK\lib\vtkRenderingFreeType-9.3.lib;D:\VTK\lib\vtkRenderingGL2PSOpenGL2-9.3.lib;D:\VTK\lib\vtkRenderingImage-9.3.lib;D:\VTK\lib\vtkRenderingLabel-9.3.lib;D:\VTK\lib\vtkRenderingLOD-9.3.lib;D:\VTK\lib\vtkRenderingOpenGL2-9.3.lib;D:\VTK\lib\vtkRenderingVolume-9.3.lib;D:\VTK\lib\vtkRenderingVolumeOpenGL2-9.3.lib;D:\VTK\lib\vtkCommonCore-9.3.lib;D:\VTK\lib\vtkCommonMath-9.3.lib;D:\VTK\lib\vtkCommonDataModel-9.3.lib;D:\VTK\lib\vtkCommonExecutionModel-9.3.lib;D:\VTK\lib\vtkInteractionStyle-9.3.lib;D:\VTK\lib\vtksys-9.3.lib;D:\VTK\lib\vtkFiltersSources-9.3.lib;D:\VTK\lib\vtkIOImage-9.3.lib;D:\VTK\lib\vtkImagingCore-9.3.lib;D:\VTK\lib\vtkcgns-9.3.lib;D:\VTK\lib\vtkChartsCore-9.3.lib;D:\VTK\lib\vtkCommonColor-9.3.lib;D:\VTK\lib\vtkCommonComputationalGeometry-9.3.lib;D:\VTK\lib\vtkCommonMisc-9.3.lib;D:\VTK\lib\vtkCommonSystem-9.3.lib;D:\VTK\lib\vtkCommonTransforms-9.3.lib;D:\VTK\lib\vtkDICOMParser-9.3.lib;D:\VTK\lib\vtkDomainsChemistry-9.3.lib;D:\VTK\lib\vtkDomainsChemistryOpenGL2-9.3.lib;D:\VTK\lib\vtkdoubleconversion-9.3.lib;D:\VTK\lib\vtkexodusII-9.3.lib;D:\VTK\lib\vtkexpat-9.3.lib;D:\VTK\lib\vtkFiltersAMR-9.3.lib;D:\VTK\lib\vtkFiltersCellGrid-9.3.lib;D:\VTK\lib\vtkFiltersCore-9.3.lib;D:\VTK\lib\vtkFiltersExtraction-9.3.lib;D:\VTK\lib\vtkFiltersFlowPaths-9.3.lib;D:\VTK\lib\vtkFiltersGeneral-9.3.lib;D:\VTK\lib\vtkFiltersGeneric-9.3.lib;D:\VTK\lib\vtkFiltersGeometry-9.3.lib;D:\VTK\lib\vtkFiltersGeometryPreview-9.3.lib;D:\VTK\lib\vtkFiltersHybrid-9.3.lib;D:\VTK\lib\vtkFiltersHyperTree-9.3.lib;D:\VTK\lib\vtkFiltersImaging-9.3.lib;D:\VTK\lib\vtkFiltersModeling-9.3.lib;D:\VTK\lib\vtkFiltersParallel-9.3.lib;D:\VTK\lib\vtkFiltersParallelImaging-9.3.lib;D:\VTK\lib\vtkFiltersPoints-9.3.lib;D:\VTK\lib\vtkFiltersProgrammable-9.3.lib;D:\VTK\lib\vtkFiltersReduction-9.3.lib;D:\VTK\lib\vtkFiltersSelection-9.3.lib;D:\VTK\lib\vtkFiltersSMP-9.3.lib;D:\VTK\lib\vtkFiltersStatistics-9.3.lib;D:\VTK\lib\vtkFiltersTensor-9.3.lib;D:\VTK\lib\vtkFiltersTexture-9.3.lib;D:\VTK\lib\vtkFiltersTopology-9.3.lib;D:\VTK\lib\vtkFiltersVerdict-9.3.lib;D:\VTK\lib\vtkfmt-9.3.lib;D:\VTK\lib\vtkfreetype-9.3.lib;D:\VTK\lib\vtkGeovisCore-9.3.lib;D:\VTK\lib\vtkgl2ps-9.3.lib;D:\VTK\lib\vtkglew-9.3.lib;D:\VTK\lib\vtkGUISupportQt-9.3.lib;D:\VTK\lib\vtkhdf5-9.3.lib;D:\VTK\lib\vtkhdf5_hl-9.3.lib;D:\VTK\lib\vtkImagingColor-9.3.lib;D:\VTK\lib\vtkImagingFourier-9.3.lib;D:\VTK\lib\vtkImagingGeneral-9.3.lib;D:\VTK\lib\vtkImagingHybrid-9.3.lib;D:\VTK\lib\vtkImagingMath-9.3.lib;D:\VTK\lib\vtkImagingMorphological-9.3.lib;D:\VTK\lib\vtkImagingSources-9.3.lib;D:\VTK\lib\vtkImagingStatistics-9.3.lib;D:\VTK\lib\vtkImagingStencil-9.3.lib;D:\VTK\lib\vtkInfovisCore-9.3.lib;D:\VTK\lib\vtkInfovisLayout-9.3.lib;D:\VTK\lib\vtkInteractionImage-9.3.lib;D:\VTK\lib\vtkInteractionWidgets-9.3.lib;D:\VTK\lib\vtkIOAMR-9.3.lib;D:\VTK\lib\vtkIOAsynchronous-9.3.lib;D:\VTK\lib\vtkIOCellGrid-9.3.lib;D:\VTK\lib\vtkIOCesium3DTiles-9.3.lib;D:\VTK\lib\vtkIOCGNSReader-9.3.lib;D:\VTK\lib\vtkIOChemistry-9.3.lib;D:\VTK\lib\vtkIOCityGML-9.3.lib;D:\VTK\lib\vtkIOCONVERGECFD-9.3.lib;D:\VTK\lib\vtkIOCore-9.3.lib;D:\VTK\lib\vtkIOEnSight-9.3.lib;D:\VTK\lib\vtkIOExodus-9.3.lib;D:\VTK\lib\vtkIOExport-9.3.lib;D:\VTK\lib\vtkIOExportGL2PS-9.3.lib;D:\VTK\lib\vtkIOExportPDF-9.3.lib;D:\VTK\lib\vtkIOFLUENTCFF-9.3.lib;D:\VTK\lib\vtkIOGeometry-9.3.lib;D:\VTK\lib\vtkIOHDF-9.3.lib;D:\VTK\lib\vtkIOImport-9.3.lib;D:\VTK\lib\vtkIOInfovis-9.3.lib;D:\VTK\lib\vtkIOIOSS-9.3.lib;D:\VTK\lib\vtkIOLegacy-9.3.lib;D:\VTK\lib\vtkIOLSDyna-9.3.lib;D:\VTK\lib\vtkIOMINC-9.3.lib;D:\VTK\lib\vtkIOMotionFX-9.3.lib;D:\VTK\lib\vtkIOMovie-9.3.lib;D:\VTK\lib\vtkIONetCDF-9.3.lib;D:\VTK\lib\vtkIOOggTheora-9.3.lib;D:\VTK\lib\vtkIOParallel-9.3.lib;D:\VTK\lib\vtkIOParallelXML-9.3.lib;D:\VTK\lib\vtkIOPLY-9.3.lib;D:\VTK\lib\vtkIOSegY-9.3.lib;D:\VTK\lib\vtkIOSQL-9.3.lib;D:\VTK\lib\vtkioss-9.3.lib;D:\VTK\lib\vtkIOTecplotTable-9.3.lib;D:\VTK\lib\vtkIOVeraOut-9.3.lib;D:\VTK\lib\vtkIOVideo-9.3.lib;D:\VTK\lib\vtkIOXML-9.3.lib;D:\VTK\lib\vtkIOXMLParser-9.3.lib;D:\VTK\lib\vtkjpeg-9.3.lib;D:\VTK\lib\vtkjsoncpp-9.3.lib;D:\VTK\lib\vtkkissfft-9.3.lib;D:\VTK\lib\vtklibharu-9.3.lib;D:\VTK\lib\vtklibproj-9.3.lib;D:\VTK\lib\vtklibxml2-9.3.lib;D:\VTK\lib\vtkloguru-9.3.lib;D:\VTK\lib\vtklz4-9.3.lib;D:\VTK\lib\vtklzma-9.3.lib;D:\VTK\lib\vtkmetaio-9.3.lib;D:\VTK\lib\vtknetcdf-9.3.lib;D:\VTK\lib\vtkogg-9.3.lib;D:\VTK\lib\vtkParallelCore-9.3.lib;D:\VTK\lib\vtkParallelDIY-9.3.lib;D:\VTK\lib\vtkpng-9.3.lib;D:\VTK\lib\vtkpugixml-9.3.lib;D:\VTK\lib\vtkRenderingCellGrid-9.3.lib;D:\VTK\lib\vtkRenderingHyperTreeGrid-9.3.lib;D:\VTK\lib\vtkRenderingLICOpenGL2-9.3.lib;D:\VTK\lib\vtkRenderingQt-9.3.lib;D:\VTK\lib\vtkRenderingSceneGraph-9.3.lib;D:\VTK\lib\vtkRenderingUI-9.3.lib;D:\VTK\lib\vtkRenderingVtkJS-9.3.lib;D:\VTK\lib\vtksqlite-9.3.lib;D:\VTK\lib\vtkTestingRendering-9.3.lib;D:\VTK\lib\vtktheora-9.3.lib;D:\VTK\lib\vtktiff-9.3.lib;D:\VTK\lib\vtkverdict-9.3.lib;D:\VTK\lib\vtkViewsContext2D-9.3.lib;D:\VTK\lib\vtkViewsCore-9.3.lib;D:\VTK\lib\vtkViewsInfovis-9.3.lib;D:\VTK\lib\vtkViewsQt-9.3.lib;D:\VTK\lib\vtkWrappingTools-9.3.lib;D:\VTK\lib\vtkzlib-9.3.lib</AdditionalDependencies>
+      <AdditionalOptions>/LTCG:INCREMENTAL /ignore:4199 %(AdditionalOptions)</AdditionalOptions>
+      <DelayLoadDLLs>node.exe;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <OutputFile>$(OutDir)$(ProjectName).node</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetExt>.node</TargetExt>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\include\node;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\src;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\config;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\openssl\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\uv\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\zlib;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\v8\include;D:\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_ply_io\node_modules\node-addon-api;D:\dciplocal\comx_sdk.node\include;..\src;D:\VTK\include\vtk-9.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NODE_GYP_MODULE_NAME=js_ext_comx_ply_io-native-win;USING_UV_SHARED=1;USING_V8_SHARED=1;V8_DEPRECATION_WARNINGS=1;V8_DEPRECATION_WARNINGS;V8_IMMINENT_DEPRECATION_WARNINGS;_GLIBCXX_USE_CXX11_ABI=1;WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_HAS_EXCEPTIONS=0;OPENSSL_NO_PINSHARED;OPENSSL_THREADS;SUPPORT_NODE_API;BUILDING_NODE_EXTENSION;HOST_BINARY="node.exe";DEBUG;_DEBUG;V8_ENABLE_CHECKS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\include\node;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\src;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\config;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\openssl\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\uv\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\zlib;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\v8\include;D:\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_ply_io\node_modules\node-addon-api;D:\dciplocal\comx_sdk.node\include;..\src;D:\VTK\include\vtk-9.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zc:__cplusplus -std:c++17 %(AdditionalOptions)</AdditionalOptions>
+      <BufferSecurityCheck>true</BufferSecurityCheck>
+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
+      <DisableSpecificWarnings>4351;4355;4800;4251;4275;4244;4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <OmitFramePointers>true</OmitFramePointers>
+      <Optimization>Full</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>NODE_GYP_MODULE_NAME=js_ext_comx_ply_io-native-win;USING_UV_SHARED=1;USING_V8_SHARED=1;V8_DEPRECATION_WARNINGS=1;V8_DEPRECATION_WARNINGS;V8_IMMINENT_DEPRECATION_WARNINGS;_GLIBCXX_USE_CXX11_ABI=1;WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_HAS_EXCEPTIONS=0;OPENSSL_NO_PINSHARED;OPENSSL_THREADS;SUPPORT_NODE_API;BUILDING_NODE_EXTENSION;HOST_BINARY="node.exe";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <StringPooling>true</StringPooling>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <WarningLevel>Level3</WarningLevel>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+    </ClCompile>
+    <Lib>
+      <AdditionalOptions>/LTCG:INCREMENTAL %(AdditionalOptions)</AdditionalOptions>
+    </Lib>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;DelayImp.lib;"C:\\Users\\91313\\AppData\\Local\\node-gyp\\Cache\\18.16.1\\x64\\node.lib";D:\VTK\lib\vtkRenderingAnnotation-9.3.lib;D:\VTK\lib\vtkRenderingContext2D-9.3.lib;D:\VTK\lib\vtkRenderingContextOpenGL2-9.3.lib;D:\VTK\lib\vtkRenderingCore-9.3.lib;D:\VTK\lib\vtkRenderingExternal-9.3.lib;D:\VTK\lib\vtkRenderingFreeType-9.3.lib;D:\VTK\lib\vtkRenderingGL2PSOpenGL2-9.3.lib;D:\VTK\lib\vtkRenderingImage-9.3.lib;D:\VTK\lib\vtkRenderingLabel-9.3.lib;D:\VTK\lib\vtkRenderingLOD-9.3.lib;D:\VTK\lib\vtkRenderingOpenGL2-9.3.lib;D:\VTK\lib\vtkRenderingVolume-9.3.lib;D:\VTK\lib\vtkRenderingVolumeOpenGL2-9.3.lib;D:\VTK\lib\vtkCommonCore-9.3.lib;D:\VTK\lib\vtkCommonMath-9.3.lib;D:\VTK\lib\vtkCommonDataModel-9.3.lib;D:\VTK\lib\vtkCommonExecutionModel-9.3.lib;D:\VTK\lib\vtkInteractionStyle-9.3.lib;D:\VTK\lib\vtksys-9.3.lib;D:\VTK\lib\vtkFiltersSources-9.3.lib;D:\VTK\lib\vtkIOImage-9.3.lib;D:\VTK\lib\vtkImagingCore-9.3.lib;D:\VTK\lib\vtkcgns-9.3.lib;D:\VTK\lib\vtkChartsCore-9.3.lib;D:\VTK\lib\vtkCommonColor-9.3.lib;D:\VTK\lib\vtkCommonComputationalGeometry-9.3.lib;D:\VTK\lib\vtkCommonMisc-9.3.lib;D:\VTK\lib\vtkCommonSystem-9.3.lib;D:\VTK\lib\vtkCommonTransforms-9.3.lib;D:\VTK\lib\vtkDICOMParser-9.3.lib;D:\VTK\lib\vtkDomainsChemistry-9.3.lib;D:\VTK\lib\vtkDomainsChemistryOpenGL2-9.3.lib;D:\VTK\lib\vtkdoubleconversion-9.3.lib;D:\VTK\lib\vtkexodusII-9.3.lib;D:\VTK\lib\vtkexpat-9.3.lib;D:\VTK\lib\vtkFiltersAMR-9.3.lib;D:\VTK\lib\vtkFiltersCellGrid-9.3.lib;D:\VTK\lib\vtkFiltersCore-9.3.lib;D:\VTK\lib\vtkFiltersExtraction-9.3.lib;D:\VTK\lib\vtkFiltersFlowPaths-9.3.lib;D:\VTK\lib\vtkFiltersGeneral-9.3.lib;D:\VTK\lib\vtkFiltersGeneric-9.3.lib;D:\VTK\lib\vtkFiltersGeometry-9.3.lib;D:\VTK\lib\vtkFiltersGeometryPreview-9.3.lib;D:\VTK\lib\vtkFiltersHybrid-9.3.lib;D:\VTK\lib\vtkFiltersHyperTree-9.3.lib;D:\VTK\lib\vtkFiltersImaging-9.3.lib;D:\VTK\lib\vtkFiltersModeling-9.3.lib;D:\VTK\lib\vtkFiltersParallel-9.3.lib;D:\VTK\lib\vtkFiltersParallelImaging-9.3.lib;D:\VTK\lib\vtkFiltersPoints-9.3.lib;D:\VTK\lib\vtkFiltersProgrammable-9.3.lib;D:\VTK\lib\vtkFiltersReduction-9.3.lib;D:\VTK\lib\vtkFiltersSelection-9.3.lib;D:\VTK\lib\vtkFiltersSMP-9.3.lib;D:\VTK\lib\vtkFiltersStatistics-9.3.lib;D:\VTK\lib\vtkFiltersTensor-9.3.lib;D:\VTK\lib\vtkFiltersTexture-9.3.lib;D:\VTK\lib\vtkFiltersTopology-9.3.lib;D:\VTK\lib\vtkFiltersVerdict-9.3.lib;D:\VTK\lib\vtkfmt-9.3.lib;D:\VTK\lib\vtkfreetype-9.3.lib;D:\VTK\lib\vtkGeovisCore-9.3.lib;D:\VTK\lib\vtkgl2ps-9.3.lib;D:\VTK\lib\vtkglew-9.3.lib;D:\VTK\lib\vtkGUISupportQt-9.3.lib;D:\VTK\lib\vtkhdf5-9.3.lib;D:\VTK\lib\vtkhdf5_hl-9.3.lib;D:\VTK\lib\vtkImagingColor-9.3.lib;D:\VTK\lib\vtkImagingFourier-9.3.lib;D:\VTK\lib\vtkImagingGeneral-9.3.lib;D:\VTK\lib\vtkImagingHybrid-9.3.lib;D:\VTK\lib\vtkImagingMath-9.3.lib;D:\VTK\lib\vtkImagingMorphological-9.3.lib;D:\VTK\lib\vtkImagingSources-9.3.lib;D:\VTK\lib\vtkImagingStatistics-9.3.lib;D:\VTK\lib\vtkImagingStencil-9.3.lib;D:\VTK\lib\vtkInfovisCore-9.3.lib;D:\VTK\lib\vtkInfovisLayout-9.3.lib;D:\VTK\lib\vtkInteractionImage-9.3.lib;D:\VTK\lib\vtkInteractionWidgets-9.3.lib;D:\VTK\lib\vtkIOAMR-9.3.lib;D:\VTK\lib\vtkIOAsynchronous-9.3.lib;D:\VTK\lib\vtkIOCellGrid-9.3.lib;D:\VTK\lib\vtkIOCesium3DTiles-9.3.lib;D:\VTK\lib\vtkIOCGNSReader-9.3.lib;D:\VTK\lib\vtkIOChemistry-9.3.lib;D:\VTK\lib\vtkIOCityGML-9.3.lib;D:\VTK\lib\vtkIOCONVERGECFD-9.3.lib;D:\VTK\lib\vtkIOCore-9.3.lib;D:\VTK\lib\vtkIOEnSight-9.3.lib;D:\VTK\lib\vtkIOExodus-9.3.lib;D:\VTK\lib\vtkIOExport-9.3.lib;D:\VTK\lib\vtkIOExportGL2PS-9.3.lib;D:\VTK\lib\vtkIOExportPDF-9.3.lib;D:\VTK\lib\vtkIOFLUENTCFF-9.3.lib;D:\VTK\lib\vtkIOGeometry-9.3.lib;D:\VTK\lib\vtkIOHDF-9.3.lib;D:\VTK\lib\vtkIOImport-9.3.lib;D:\VTK\lib\vtkIOInfovis-9.3.lib;D:\VTK\lib\vtkIOIOSS-9.3.lib;D:\VTK\lib\vtkIOLegacy-9.3.lib;D:\VTK\lib\vtkIOLSDyna-9.3.lib;D:\VTK\lib\vtkIOMINC-9.3.lib;D:\VTK\lib\vtkIOMotionFX-9.3.lib;D:\VTK\lib\vtkIOMovie-9.3.lib;D:\VTK\lib\vtkIONetCDF-9.3.lib;D:\VTK\lib\vtkIOOggTheora-9.3.lib;D:\VTK\lib\vtkIOParallel-9.3.lib;D:\VTK\lib\vtkIOParallelXML-9.3.lib;D:\VTK\lib\vtkIOPLY-9.3.lib;D:\VTK\lib\vtkIOSegY-9.3.lib;D:\VTK\lib\vtkIOSQL-9.3.lib;D:\VTK\lib\vtkioss-9.3.lib;D:\VTK\lib\vtkIOTecplotTable-9.3.lib;D:\VTK\lib\vtkIOVeraOut-9.3.lib;D:\VTK\lib\vtkIOVideo-9.3.lib;D:\VTK\lib\vtkIOXML-9.3.lib;D:\VTK\lib\vtkIOXMLParser-9.3.lib;D:\VTK\lib\vtkjpeg-9.3.lib;D:\VTK\lib\vtkjsoncpp-9.3.lib;D:\VTK\lib\vtkkissfft-9.3.lib;D:\VTK\lib\vtklibharu-9.3.lib;D:\VTK\lib\vtklibproj-9.3.lib;D:\VTK\lib\vtklibxml2-9.3.lib;D:\VTK\lib\vtkloguru-9.3.lib;D:\VTK\lib\vtklz4-9.3.lib;D:\VTK\lib\vtklzma-9.3.lib;D:\VTK\lib\vtkmetaio-9.3.lib;D:\VTK\lib\vtknetcdf-9.3.lib;D:\VTK\lib\vtkogg-9.3.lib;D:\VTK\lib\vtkParallelCore-9.3.lib;D:\VTK\lib\vtkParallelDIY-9.3.lib;D:\VTK\lib\vtkpng-9.3.lib;D:\VTK\lib\vtkpugixml-9.3.lib;D:\VTK\lib\vtkRenderingCellGrid-9.3.lib;D:\VTK\lib\vtkRenderingHyperTreeGrid-9.3.lib;D:\VTK\lib\vtkRenderingLICOpenGL2-9.3.lib;D:\VTK\lib\vtkRenderingQt-9.3.lib;D:\VTK\lib\vtkRenderingSceneGraph-9.3.lib;D:\VTK\lib\vtkRenderingUI-9.3.lib;D:\VTK\lib\vtkRenderingVtkJS-9.3.lib;D:\VTK\lib\vtksqlite-9.3.lib;D:\VTK\lib\vtkTestingRendering-9.3.lib;D:\VTK\lib\vtktheora-9.3.lib;D:\VTK\lib\vtktiff-9.3.lib;D:\VTK\lib\vtkverdict-9.3.lib;D:\VTK\lib\vtkViewsContext2D-9.3.lib;D:\VTK\lib\vtkViewsCore-9.3.lib;D:\VTK\lib\vtkViewsInfovis-9.3.lib;D:\VTK\lib\vtkViewsQt-9.3.lib;D:\VTK\lib\vtkWrappingTools-9.3.lib;D:\VTK\lib\vtkzlib-9.3.lib</AdditionalDependencies>
+      <AdditionalOptions>/LTCG:INCREMENTAL /ignore:4199 %(AdditionalOptions)</AdditionalOptions>
+      <DelayLoadDLLs>node.exe;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <OutputFile>$(OutDir)$(ProjectName).node</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetExt>.node</TargetExt>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\include\node;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\src;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\config;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\openssl\openssl\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\uv\include;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\zlib;C:\Users\91313\AppData\Local\node-gyp\Cache\18.16.1\deps\v8\include;D:\dciplocal\comx_sdk.node\src\js_ext\js_ext_comx_ply_io\node_modules\node-addon-api;D:\dciplocal\comx_sdk.node\include;..\src;D:\VTK\include\vtk-9.3;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NODE_GYP_MODULE_NAME=js_ext_comx_ply_io-native-win;USING_UV_SHARED=1;USING_V8_SHARED=1;V8_DEPRECATION_WARNINGS=1;V8_DEPRECATION_WARNINGS;V8_IMMINENT_DEPRECATION_WARNINGS;_GLIBCXX_USE_CXX11_ABI=1;WIN32;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_HAS_EXCEPTIONS=0;OPENSSL_NO_PINSHARED;OPENSSL_THREADS;SUPPORT_NODE_API;BUILDING_NODE_EXTENSION;HOST_BINARY="node.exe";%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="..\binding.gyp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\js_ext_comx_ply_io.cc">
+      <ObjectFileName>$(IntDir)\src\js_ext_comx_ply_io.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="C:\Users\91313\AppData\Roaming\npm\node_modules\node-gyp\src\win_delay_load_hook.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\node_modules\node-addon-api\src\nothing.vcxproj">
+      <Project>{66791FBF-3EBE-33A8-4E96-E4126C2FADDF}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>
