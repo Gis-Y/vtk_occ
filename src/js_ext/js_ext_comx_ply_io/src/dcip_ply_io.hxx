@@ -21,18 +21,667 @@
 #ifndef PLY_IO_GUID_2F74C3A019B14F4298935D9F089E86B2
 #define PLY_IO_GUID_2F74C3A019B14F4298935D9F089E86B2
 
+
+ // VTK Core & Data Structures
+#include <vtkSmartPointer.h>
+#include <vtkPolyData.h>
+#include <vtkPointData.h>
+#include <vtkStructuredGrid.h>
+#include <vtkPoints.h>
+#include <vtkCellArray.h>
+#include <vtkDoubleArray.h>
+#include <vtkFloatArray.h>
+
+// VTK Readers
+#include <vtkDataSetReader.h>
+#include <vtkSTLReader.h>
+#include <vtkXMLStructuredGridReader.h>
+
+// VTK Rendering & Actors
+#include <vtkRenderer.h>
+#include <vtkActor.h>
+#include <vtkAssembly.h>
+#include <vtkFollower.h>
+#include <vtkAxesActor.h>
+#include <vtkTextActor3D.h>
+#include <vtkTextProperty.h>
+
+// VTK Mappers
+#include <vtkDataSetMapper.h>
+#include <vtkPolyDataMapper.h>
+
+// VTK Widgets & UI
+#include <vtkOrientationMarkerWidget.h>
+#include <vtkScalarBarActor.h>
+#include <vtkScalarBarWidget.h>
+#include <vtkPlaneWidget.h>
+
+// VTK Coloring & Lookup Tables
+#include <vtkColorTransferFunction.h>
+#include <vtkLookupTable.h>
+
+// VTK Filters & Algorithms
+#include <vtkDataSetSurfaceFilter.h>
+#include <vtkResampleWithDataSet.h>
+#include <vtkClipClosedSurface.h>
+#include <vtkClipPolyData.h>
+
+// VTK Math & Geometry Objects
+#include <vtkPlaneCollection.h>
+#include <vtkPlane.h>
+
+// VTK Sources
+#include <vtkSphereSource.h>
+#include <vtkLineSource.h>
+
+
+#include <cstdio> // 对应 sscanf
 #include <cstdint>
 #include <cstring>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include <map>
 namespace std {
 typedef float float32_t;
 }
 
+
+// 云图实时剖切（未实现）
+class BuildVTKWidgetCall : public vtkCommand {
+public:
+    static BuildVTKWidgetCall* New() { return new BuildVTKWidgetCall; }
+
+public:
+    virtual void Execute(vtkObject* caller, unsigned long eventId,
+        void* callData) {
+        vtkPlaneWidget* pWidget =
+            reinterpret_cast<vtkPlaneWidget*>(caller);
+        double center[3];
+        pWidget->GetCenter(center);
+
+        double normal[3];
+        pWidget->GetNormal(normal);
+
+        if (pWidget) {
+            if (isImage) {
+                pWidget->GetPlane(planeNew);
+
+                if (isVir) {
+                    vtkSmartPointer<vtkPolyDataMapper>
+                        coneMapper02 =
+                        vtkPolyDataMapper::New();
+                    coneMapper02->SetInputConnection(
+                        resampler->GetOutputPort());
+                    coneMapper02->ScalarVisibilityOff();
+                    vtkSmartPointer<vtkActor> actor02 =
+                        vtkSmartPointer<vtkActor>::New();
+                    actor02->SetMapper(coneMapper02);
+                    actor02->GetProperty()->SetColor(
+                        0.5, 0.5,
+                        0.5); // 设置polyData2的颜色
+                    actor02->GetProperty()->SetOpacity(
+                        0.03); // 设置polyData2的透明度为0.5
+                    renderer->AddActor(actor02);
+                }
+                else {
+                    vtkSmartPointer<vtkPolyDataMapper>
+                        coneMapper02 =
+                        vtkPolyDataMapper::New();
+                    coneMapper02->SetInputConnection(NULL);
+                    coneMapper02->ScalarVisibilityOff();
+                    vtkSmartPointer<vtkActor> actor02 =
+                        vtkSmartPointer<vtkActor>::New();
+                    actor02->SetMapper(coneMapper02);
+                    actor02->GetProperty()->SetColor(
+                        0.5, 0.5,
+                        0.5); // 设置polyData2的颜色
+                    actor02->GetProperty()->SetOpacity(
+                        0.03); // 设置polyData2的透明度为0.5
+                    renderer->AddActor(actor02);
+                }
+
+                double normal[3];
+                planeNew->GetNormal(normal);
+                planeNew->SetNormal(-normal[0], -normal[1],
+                    -normal[2]);
+
+                vtkPlanes->RemoveAllItems();
+                vtkPlanes->AddItem(planeNew);
+                clipper->SetInputConnection(
+                    resampler->GetOutputPort());
+                clipper->SetClippingPlanes(vtkPlanes);
+                clipper->SetActivePlaneId(1);
+                clipper->SetScalarModeToColors();
+                clipper->Update();
+
+                mapper->SetInputConnection(
+                    clipper->GetOutputPort());
+                // isPCall = true;
+            }
+            else {
+                vtkPlanes->RemoveAllItems();
+                pWidget->GetPlane(planeNew);
+
+                vtkPlanes->AddItem(planeNew);
+                clipper->SetInputConnection(
+                    resampler->GetOutputPort());
+                clipper->SetClippingPlanes(vtkPlanes);
+                clipper->SetActivePlaneId(1);
+                clipper->SetScalarModeToColors();
+
+                if (isVir) {
+                    vtkSmartPointer<vtkPolyDataMapper>
+                        coneMapper02 =
+                        vtkPolyDataMapper::New();
+                    coneMapper02->SetInputConnection(
+                        resampler->GetOutputPort());
+                    coneMapper02->ScalarVisibilityOff();
+                    vtkSmartPointer<vtkActor> actor02 =
+                        vtkSmartPointer<vtkActor>::New();
+                    actor02->SetMapper(coneMapper02);
+                    actor02->GetProperty()->SetColor(
+                        0.5, 0.5,
+                        0.5); // 设置polyData2的颜色
+                    actor02->GetProperty()->SetOpacity(
+                        0.03); // 设置polyData2的透明度为0.5
+                    renderer->AddActor(actor02);
+                }
+                else {
+                    vtkSmartPointer<vtkPolyDataMapper>
+                        coneMapper02 =
+                        vtkPolyDataMapper::New();
+                    coneMapper02->SetInputConnection(NULL);
+                    coneMapper02->ScalarVisibilityOff();
+                    vtkSmartPointer<vtkActor> actor02 =
+                        vtkSmartPointer<vtkActor>::New();
+                    actor02->SetMapper(coneMapper02);
+                    actor02->GetProperty()->SetColor(
+                        0.5, 0.5,
+                        0.5); // 设置polyData2的颜色
+                    actor02->GetProperty()->SetOpacity(
+                        0.03); // 设置polyData2的透明度为0.5
+                    renderer->AddActor(actor02);
+                }
+
+                // renderer->AddActor(actor02);
+                mapper->SetInputConnection(
+                    clipper->GetOutputPort());
+            }
+        }
+    }
+    void setPlane(vtkSmartPointer<vtkPlane> other) { pPlane = other; }
+    void setRenderer(vtkSmartPointer<vtkRenderer> other) {
+        renderer = other;
+    }
+    void setMapper(vtkSmartPointer<vtkPolyDataMapper> other) {
+        mapper = other;
+    }
+
+private:
+    vtkSmartPointer<vtkPolyData> clippedOutput =
+        vtkSmartPointer<vtkPolyData>::New();
+    vtkSmartPointer<vtkTextProperty> textCutterProperty =
+        vtkSmartPointer<vtkTextProperty>::New();
+    vtkSmartPointer<vtkTextActor> textCutterActor =
+        vtkSmartPointer<vtkTextActor>::New();
+    vtkSmartPointer<vtkPlane> pPlane = vtkSmartPointer<vtkPlane>::New();
+    vtkSmartPointer<vtkRenderer> renderer =
+        vtkSmartPointer<vtkRenderer>::New();
+    vtkSmartPointer<vtkPolyDataMapper> mapper =
+        vtkSmartPointer<vtkPolyDataMapper>::New();
+    vtkSmartPointer<vtkPolyData> clipedData = vtkPolyData::New();
+    vtkSmartPointer<vtkPlaneCollection> vtkPlanes =
+        vtkSmartPointer<vtkPlaneCollection>::New();
+
+public:
+    double minValue = -1000000;
+    double maxValue = -1000000;
+    bool isImage = false;
+    bool isPCall = false;
+    bool isVir = false;
+    vtkSmartPointer<vtkResampleWithDataSet> resampler =
+        vtkSmartPointer<vtkResampleWithDataSet>::New();
+    vtkSmartPointer<vtkPolyDataMapper> coneMapper02 =
+        vtkPolyDataMapper::New();
+    vtkSmartPointer<vtkClipPolyData> cliper =
+        vtkSmartPointer<vtkClipPolyData>::New();
+    vtkSmartPointer<vtkClipClosedSurface> clipper =
+        vtkSmartPointer<vtkClipClosedSurface>::New();
+    vtkSmartPointer<vtkPlane> planeNew = vtkSmartPointer<vtkPlane>::New();
+};
+
+
+
+//******************************************************************************
+// 任意点的类
+struct Point3D {
+    double x;
+    double y;
+    double z;
+};
+// 箭头1
+struct ArrowFrame {
+    string name;
+    string selectPoint;
+    double x, y, z;
+    double xn, yn, zn;
+    double size;
+    vector<double> circle;
+};
+// 箭头2
+struct arrow {
+    string name;
+    string mark;
+    string selectPoint;
+    string size;
+    double x, y, z;
+    double xn, yn, zn;
+    double xr, yr, zr;
+};
+// 固定支撑
+struct constrain {
+    string name;
+    string selectPoint;
+    double x, y, z;
+    int xr, yr, zr;
+    int xn, yn, zn;
+};
+// 梁
+struct beam {
+    string name;
+    vector<Point3D> pos;
+    double radius;
+    double len;
+    double num;
+    double M;
+    double poi;
+};
+// 弹簧
+struct spring {
+    string name;
+    string type1, type2;
+    double stiffness_x, stiffness_y, stiffness_z;
+    double startX, startY, startZ;
+    double endX, endY, endZ;
+};
+// 连接
+struct connects {
+    string name;
+    string mark1, mark2;
+    double x1, y1, z1;
+    double x2, y2, z2;
+    int xn, yn, zn;
+    int xr, yr, zr;
+};
+// rb3
+struct RB3 {
+    // int id;
+    string type;
+    vector<int> id;
+    string name;
+    vector<Point3D> cp;
+    double x, y, z;
+};
+// 面的力（载荷-分布载荷）
+struct forceFace {
+    int selectFaceId;
+    string size;
+    int xn, yn, zn;
+    vector<double> disface;
+};
+// 面上的固定支撑（约束-固定支撑-添加面）
+struct fixFace {
+    int selectFaceId;
+    int xn, yn, zn;
+    int xr, yr, zr;
+};
+// 高斯点
+struct guass {
+    int id;      // 编号
+    Point3D pts; // 上面points结构体定义的点（x,y,z）
+};
+// 统一设置的颜色值
+struct RGBS {
+    double r, g, b;
+};
+// 目前未用
+struct FACE {
+    string sign;
+    double centerPoints[3] = { 0, 0, 0 };
+    int IdSelect;
+};
+// 前处理类的管理（目前未用）
+class dataManage {
+public:
+    vector<guass>
+        pts; // 创建一个容器，pts的值只存储在<guass>容器里，取值也是根据对应的类取
+    vector<ArrowFrame> af; // af的值只存储在<ArrowFrame>容器里
+    vector<arrow> arr;
+    vector<constrain> con;
+    vector<beam> bm;
+    vector<spring> sp;
+    vector<connects> ct;
+    vector<RB3> rb;
+    vector<forceFace> fF;
+    vector<fixFace> fA;
+};
+// 目前未用
+struct DataSet {
+    double x;
+    double y;
+    double z;
+    double value;
+};
+
+//************************************************************************************
+// 显示动力学后处理模块（collision）
+class postCollision {
+public:
+    int frame = 1;
+    int fileCount = 0;
+    string currentName;
+    double range[2] = { -228.129, 63.7251 };
+    vector<double> sigma_xx;
+    std::vector<vtkSmartPointer<vtkDataSetReader>> readerArray;
+    string information;
+    string attValue = "";
+    string path = "";
+    vtkSmartPointer<vtkDataSetMapper> mapper =
+        vtkSmartPointer<vtkDataSetMapper>::New();
+    vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+    vtkSmartPointer<vtkRenderer> renderer =
+        vtkSmartPointer<vtkRenderer>::New();
+    vtkSmartPointer<vtkDataSetReader> reader =
+        vtkSmartPointer<vtkDataSetReader>::New();
+    vtkSmartPointer<vtkColorTransferFunction> colorTransferFunction =
+        vtkSmartPointer<vtkColorTransferFunction>::New();
+    vtkSmartPointer<vtkColorTransferFunction> colorMap =
+        vtkSmartPointer<vtkColorTransferFunction>::New();
+    vtkSmartPointer<vtkAxesActor> Axes =
+        vtkSmartPointer<vtkAxesActor>::New();
+    vtkSmartPointer<vtkOrientationMarkerWidget> widget =
+        vtkSmartPointer<vtkOrientationMarkerWidget>::New();
+    vtkSmartPointer<vtkScalarBarActor> scalarBarActor =
+        vtkSmartPointer<vtkScalarBarActor>::New();
+    vtkSmartPointer<vtkScalarBarWidget> scalarBarWidget =
+        vtkSmartPointer<vtkScalarBarWidget>::New();
+};
+// 结构后处理模块
+class postManage {
+public:
+    vtkSmartPointer<vtkSTLReader> stlReader =
+        vtkSmartPointer<vtkSTLReader>::New();
+    vtkSmartPointer<vtkXMLStructuredGridReader> readers =
+        vtkSmartPointer<vtkXMLStructuredGridReader>::New();
+    vtkSmartPointer<vtkPolyData> targetData =
+        vtkSmartPointer<vtkPolyData>::New();
+    vtkSmartPointer<vtkPointData> PointData =
+        vtkSmartPointer<vtkPointData>::New();
+    vtkSmartPointer<vtkStructuredGrid> structuredGrid =
+        vtkSmartPointer<vtkStructuredGrid>::New();
+    vtkSmartPointer<vtkPoints> pointsValue =
+        vtkSmartPointer<vtkPoints>::New();
+    vtkSmartPointer<vtkDoubleArray> xData =
+        vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDoubleArray> yData =
+        vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDoubleArray> zData =
+        vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDoubleArray> MagnitudeData =
+        vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDoubleArray> strainXData =
+        vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDoubleArray> strainYData =
+        vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDoubleArray> strainZData =
+        vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDoubleArray> strainData =
+        vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDoubleArray> stressXData =
+        vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDoubleArray> stressYData =
+        vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDoubleArray> stressZData =
+        vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDoubleArray> stressData =
+        vtkSmartPointer<vtkDoubleArray>::New();
+    vtkSmartPointer<vtkDataSetSurfaceFilter> surfaceFilter =
+        vtkSmartPointer<vtkDataSetSurfaceFilter>::New();
+    vtkSmartPointer<vtkResampleWithDataSet> resampler =
+        vtkSmartPointer<vtkResampleWithDataSet>::New();
+    vtkSmartPointer<vtkColorTransferFunction> colorMap =
+        vtkSmartPointer<vtkColorTransferFunction>::New();
+    vtkSmartPointer<vtkLookupTable> lut =
+        vtkSmartPointer<vtkLookupTable>::New();
+    vtkSmartPointer<vtkPolyDataMapper> mapper =
+        vtkSmartPointer<vtkPolyDataMapper>::New();
+    vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+    vtkSmartPointer<vtkScalarBarActor> scalarBarActor =
+        vtkSmartPointer<vtkScalarBarActor>::New();
+    vtkSmartPointer<vtkScalarBarWidget> scalarBarWidget =
+        vtkSmartPointer<vtkScalarBarWidget>::New();
+    vtkSmartPointer<vtkPlaneCollection> vtkPlanes =
+        vtkSmartPointer<vtkPlaneCollection>::New();
+    vtkSmartPointer<vtkClipClosedSurface> clipper =
+        vtkSmartPointer<vtkClipClosedSurface>::New();
+    vtkSmartPointer<vtkPlane> plane = vtkSmartPointer<vtkPlane>::New();
+    vtkSmartPointer<vtkClipPolyData> vtkClipper =
+        vtkSmartPointer<vtkClipPolyData>::New();
+    vtkSmartPointer<vtkPlaneWidget> pWidget =
+        vtkSmartPointer<vtkPlaneWidget>::New();
+    vtkSmartPointer<vtkPolyData> polys =
+        vtkSmartPointer<vtkPolyData>::New();
+    vtkSmartPointer<BuildVTKWidgetCall> pCall =
+        vtkSmartPointer<BuildVTKWidgetCall>::New();
+    vtkSmartPointer<vtkResampleWithDataSet> resamplers =
+        vtkSmartPointer<vtkResampleWithDataSet>::New();
+    vtkSmartPointer<vtkPolyDataMapper> fillMapper =
+        vtkSmartPointer<vtkPolyDataMapper>::New();
+    vtkSmartPointer<vtkActor> fillActor = vtkSmartPointer<vtkActor>::New();
+
+    double range[2] = { 0, 0 };
+    vector<vtkSmartPointer<vtkActor>> motiActor;
+    // vector<vtkSmartPointer<vtkPolyData>> motiData;
+    vector<string> path;
+    vector<vector<string>> newPath;
+
+    // STL缓存相关成员变量
+    vtkSmartPointer<vtkPolyData> cachedStlData =
+        vtkSmartPointer<vtkPolyData>::New(); // 缓存的STL数据
+
+    vtkSmartPointer<vtkPolyData> plyData =
+        vtkSmartPointer<vtkPolyData>::New();
+    vtkSmartPointer<vtkPoints> plyPoints =
+        vtkSmartPointer<vtkPoints>::New();
+    vtkSmartPointer<vtkCellArray> plyShells =
+        vtkSmartPointer<vtkCellArray>::New();
+    vtkSmartPointer<vtkFloatArray> plyVonmises =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plyDisX =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plyDisY =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plyDisZ =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plyDisTotal =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plySR11 =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plySR22 =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plySR33 =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plySR12 =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plySR13 =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plySR23 =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plySS11 =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plySS22 =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plySS33 =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plySS12 =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plySS13 =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plySS23 =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plyTemperature =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkFloatArray> plyAllDis =
+        vtkSmartPointer<vtkFloatArray>::New();
+    vtkSmartPointer<vtkPolyDataMapper> plyMapper =
+        vtkSmartPointer<vtkPolyDataMapper>::New();
+    vtkSmartPointer<vtkColorTransferFunction> plyColorMap =
+        vtkSmartPointer<vtkColorTransferFunction>::New();
+    vtkSmartPointer<vtkActor> plyActor = vtkSmartPointer<vtkActor>::New();
+
+    vtkSmartPointer<vtkSphereSource> minPoint =
+        vtkSmartPointer<vtkSphereSource>::New();
+    vtkSmartPointer<vtkLineSource> minline =
+        vtkSmartPointer<vtkLineSource>::New();
+    vtkSmartPointer<vtkTextProperty> mintextProp =
+        vtkSmartPointer<vtkTextProperty>::New();
+    vtkSmartPointer<vtkTextActor3D> mintitle =
+        vtkSmartPointer<vtkTextActor3D>::New();
+    vtkSmartPointer<vtkPolyDataMapper> minMapperLine =
+        vtkSmartPointer<vtkPolyDataMapper>::New();
+    vtkSmartPointer<vtkPolyDataMapper> minMapperPoint =
+        vtkSmartPointer<vtkPolyDataMapper>::New();
+    vtkSmartPointer<vtkActor> minActorLine =
+        vtkSmartPointer<vtkActor>::New();
+    vtkSmartPointer<vtkActor> minActorPoint =
+        vtkSmartPointer<vtkActor>::New();
+
+    vtkSmartPointer<vtkSphereSource> maxPoint =
+        vtkSmartPointer<vtkSphereSource>::New();
+    vtkSmartPointer<vtkLineSource> maxline =
+        vtkSmartPointer<vtkLineSource>::New();
+    vtkSmartPointer<vtkTextProperty> maxtextProp =
+        vtkSmartPointer<vtkTextProperty>::New();
+    vtkSmartPointer<vtkTextActor3D> maxtitle =
+        vtkSmartPointer<vtkTextActor3D>::New();
+    vtkSmartPointer<vtkPolyDataMapper> maxMapperLine =
+        vtkSmartPointer<vtkPolyDataMapper>::New();
+    vtkSmartPointer<vtkPolyDataMapper> maxMapperPoint =
+        vtkSmartPointer<vtkPolyDataMapper>::New();
+    vtkSmartPointer<vtkActor> maxActorLine =
+        vtkSmartPointer<vtkActor>::New();
+    vtkSmartPointer<vtkActor> maxActorPoint =
+        vtkSmartPointer<vtkActor>::New();
+
+
+    vtkSmartPointer<vtkFollower> minFollower = vtkSmartPointer<vtkFollower>::New();
+    vtkSmartPointer<vtkFollower> maxFollower = vtkSmartPointer<vtkFollower>::New();
+
+
+
+};
+// 梁的数据
+struct beamsData {
+    vector<vtkSmartPointer<vtkActor>> line;
+    vector<vtkSmartPointer<vtkActor>> point;
+};
+// 结构前处理数据（使用中）
+class workData {
+public:
+
+    map<string, vtkSmartPointer<vtkActor>> Points; // 创建的任何点都存储在points容器中
+
+
+    map<string, vtkSmartPointer<vtkActor>> Arrows; // 存储箭头
+    std::map<std::string, std::vector<vtkSmartPointer<vtkActor>>> Arrows1;
+    map<string, vtkSmartPointer<vtkAssembly>> ArrowAssemblies;
+    map<string, vtkSmartPointer<vtkTextActor3D>> TitleArrows; // 箭头关联的3D文本标签（如标注箭头含义）
+
+
+    map<string, vtkSmartPointer<vtkActor>> Constrains; // 固定支撑（约束）
+    std::map<std::string, std::vector<vtkSmartPointer<vtkActor>>> ConstrainsTranslationMap;
+    std::map<std::string, std::vector<vtkSmartPointer<vtkActor>>> ConstrainsRotationMap;
+    map<string, vtkSmartPointer<vtkAssembly>> ConstrainsAssemblies;
+
+
+    // 热约束
+    std::map<std::string, std::vector<vtkSmartPointer<vtkActor>>> ThermalConstrainsMap;
+    map<string, vtkSmartPointer<vtkAssembly>> ThermalConstrainsAssemblies;
+
+
+    // 对流换热
+    std::map<std::string, std::vector<vtkSmartPointer<vtkActor>>> ConvectionsMap;
+    map<string, vtkSmartPointer<vtkAssembly>> ConvectionsAssemblies;
+
+
+    // 表面热流
+    std::map<std::string, std::vector<vtkSmartPointer<vtkActor>>> HeatFluxesMap;
+    map<string, vtkSmartPointer<vtkAssembly>> HeatFluxesAssemblies;
+
+
+    map<string, vtkSmartPointer<vtkActor>> Spring;            // 弹簧
+    map<string, vtkSmartPointer<vtkActor>> Connects;          // 连接
+    map<string, vtkSmartPointer<vtkActor>> Rb3;               // rb3
+    map<string, beamsData> Beams;                             // 梁
+    map<string, vtkSmartPointer<vtkTextActor3D>> mark;        // 标记
+    map<string, vtkSmartPointer<vtkActor>> distributedArrows; // 新增字段
+    map<string, vtkSmartPointer<vtkActor>> pointActor; // rb3的点
+
+    vtkSmartPointer<vtkActor> actor_Mesh = vtkSmartPointer<vtkActor>::New();
+    // vector也作为容器，创建vector<guass>容器，pts的值只存储在<guass>容器中，取值也是根据对应的类取
+    // 以下之后会被转换为vtkActor存入对应的map中
+    vector<guass> pts; // 高斯点
+    map<string, vector<guass>> newPts;
+    vector<ArrowFrame> af; // 箭头
+    vector<arrow> arr;     // 箭头
+    vector<constrain> con; // 固定支撑（约束）
+    vector<beam> bm;       // 梁
+    vector<spring> sp;     // 弹簧
+    vector<connects> ct;   // 连接
+    vector<RB3> rb;        // rb3
+    vector<forceFace> fF;  // 面力-载荷-分布载荷
+    vector<fixFace> fA; // 面上的固定支撑-约束-固定支撑-添加面
+    vtkSmartPointer<vtkSphereSource> sphereSource =
+        vtkSmartPointer<vtkSphereSource>::New();
+    vtkSmartPointer<vtkPolyDataMapper> mapper =
+        vtkSmartPointer<vtkPolyDataMapper>::New();
+    vtkSmartPointer<vtkActor> actor = vtkSmartPointer<vtkActor>::New();
+};
+// ply结构，读取ply时存储在以下几个数据成员变量里
+struct IPlyEntry {
+    virtual bool Points(const float*& pts, int& nlen) = 0;       // 点
+    virtual bool Triangles(const int*& elements, int& elen) = 0; // 三角形
+    virtual bool Normals(const float*& normals, int& nnlen) = 0; // 向量
+};
+
+
+
 namespace dcip_ply {
+
+   
+    struct FrameAnimData {
+        std::vector<float> scalar; // 标量 (如 DisTotal，用于颜色映射)
+        std::vector<float> disX;   // X方向位移
+        std::vector<float> disY;   // Y方向位移
+        std::vector<float> disZ;   // Z方向位移
+    };
+
+    struct FrameExtrema {
+        double minVal = 0, minX = 0, minY = 0, minZ = 0;
+        double maxVal = 0, maxX = 0, maxY = 0, maxZ = 0;
+    };
+
+    struct ProcessedRenderFrame {
+        bool isProcessed = false;       // 标记是否已经预处理过
+        std::vector<double> splitCoords; // 切割后的顶点坐标 [x1, y1, z1, x2, y2, z2...]
+        std::vector<int> splitElems;     // 切割后的三角形索引 [v1, v2, v3, ...]
+        std::vector<double> splitValues; // 切割后的节点标量值 (用于平滑着色)
+        double minVal = 0.0;
+        double maxVal = 0.0;
+    };
+
 // Structure for storing triangle mesh information.
 struct triangle_part_t {
     std::vector<float> points;        // Vertex information.
@@ -84,8 +733,24 @@ struct triangle_part_t {
     // [新增] 温度 - 单元
     std::vector<float> cell_Temperature;
 
+
+    // ==========================================
+    // [新增] 动画多帧数据缓存 (完全动态)
+    // 外层 Key: 阶数 (Order)
+    // 内层 Key: 帧数 (Frame)
+    // ==========================================
+    // 物理量缓存: 阶数 -> 帧数 -> 单行数据 (如位移/应力)
+    std::map<int, std::map<int, FrameAnimData>> animDataCache;
+    std::map<int, std::map<int, FrameExtrema>> animExtremaCache;
+    std::map<int, std::map<int, ProcessedRenderFrame>> renderReadyCache;
+
+    // [新增] 记录解析到的所有阶数，方便后续 UI 交互
+    std::vector<int> availableOrders;
+
     virtual ~triangle_part_t() {}
 };
+
+
 
 // Enumeration type for different states of PLY header parsing.
 enum class PlyHeaderState {
@@ -294,5 +959,44 @@ inline bool readPLYBinary(const std::string &filename, triangle_part_t &mesh) {
         return true;
 }
 } // namespace dcip_ply
+
+struct TPlyEntry : public IPlyEntry, public dcip_ply::triangle_part_t {
+    virtual bool Points(const float*& pts, int& nlen) {
+        pts = &points[0];
+        nlen = static_cast<int>(points.size() / 3);
+
+        return true;
+    }
+
+    virtual bool Triangles(const int*& ptr_triangles, int& tlen) {
+        ptr_triangles = &triangles[0];
+        tlen = static_cast<int>(triangles.size() / 3);
+
+        return true;
+    }
+
+    virtual bool Normals(const float*& normals, int& nnlen) {
+        normals = &vertexNormals[0];
+        nnlen = static_cast<int>(vertexNormals.size() / 3);
+
+        return true;
+    }
+    virtual ~TPlyEntry() {}
+};
+
+vector<float> extractNumbers(const string& str) {
+    vector<float> numbers;
+    stringstream ss(str);
+    string temp;
+    while (ss >> temp) {
+        double num;
+        stringstream convert(temp);
+        if (convert >> num) {
+            numbers.push_back(num);
+        }
+    }
+    return numbers;
+}
+
 
 #endif // PLY_IO_GUID_2F74C3A019B14F4298935D9F089E86B2
