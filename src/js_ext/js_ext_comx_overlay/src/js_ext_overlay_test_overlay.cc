@@ -50,6 +50,7 @@ private:
     bool m_hasUserMoved;
     int m_lastUserX;
     int m_lastUserY;
+    bool m_isScreenPosition; // true: fixed 2D screen position; false: follow 3D world position
 
     // [新增] 辅助判断：是否为颜色条
     bool IsColorBar() const {
@@ -79,6 +80,10 @@ public:
         m_lastUserX = x;
         m_lastUserY = y;
 
+        m_worldX = 0;
+        m_worldY = 0;
+        m_worldZ = 0;
+        m_isScreenPosition = true;
 
         m_hasUserMoved = false;
 
@@ -118,9 +123,25 @@ public:
         m_textColor[0] = r; m_textColor[1] = g; m_textColor[2] = b; m_textColor[3] = a;
     }
 
+    // Fixed 2D screen position. x/y are pixel coordinates in the OpenGL window.
+    void SetScreenPosition(int x, int y) {
+        m_isScreenPosition = true;
+        this->x_ = x;
+        this->y_ = y;
+        this->original_x_ = x;
+        this->original_y_ = y;
+        m_offsetX = x;
+        m_offsetY = y;
+        setGeometry(x, y);
+        this->position_initialized_ = true;
+    }
+
     // [关键修改] SetPosition 逻辑分流
+    // For color bars: x/y are fixed 2D screen coordinates.
+    // For normal overlays: x/y/z are 3D world coordinates and will be projected every frame.
     void SetPosition(int x, int y, int z) {
         if (IsColorBar()) {
+            m_isScreenPosition = true;
             // ===========================
             // 模式 A: 颜色条 (固定 UI)
             // ===========================
@@ -136,6 +157,7 @@ public:
             this->position_initialized_ = true;
         }
         else {
+            m_isScreenPosition = false;
             // ===========================
             // 模式 B: 普通悬浮窗 (3D 跟随)
             // ===========================
@@ -193,7 +215,7 @@ public:
         this->alpha_ = 0.0f;
 
         // [关键修改] 仅对普通形状（非颜色条）执行位置同步逻辑
-        if (!IsColorBar()) {
+        if (!IsColorBar() && !m_isScreenPosition) {
             int wx = 0, wy = 0;
             dglProject(m_worldX, m_worldY, m_worldZ, wx, wy);
 
@@ -218,7 +240,7 @@ public:
                 this->position_initialized_ = false;
                 this->original_x_ = m_offsetX;
                 this->original_y_ = m_offsetY;
-            
+
             }
         }
         // 如果是颜色条，跳过上面的同步，位置一直保持 SetPosition 设定的屏幕坐标
@@ -567,10 +589,43 @@ public:
         static std::map<uint64_t, MyOverlay*> instances;
         return instances;
     }
+
+    static std::map<std::string, MyOverlay*>& GetNamedInstanceMap() {
+        static std::map<std::string, MyOverlay*> namedInstances;
+        return namedInstances;
+    }
+
     static MyOverlay* GetOverlay(uint64_t id) {
         auto& map = GetInstanceMap();
         if (map.find(id) != map.end()) { return map[id]; }
         return nullptr;
+    }
+
+    static MyOverlay* GetOverlayById(const std::string& id) {
+        auto& map = GetNamedInstanceMap();
+        auto it = map.find(id);
+        if (it != map.end()) { return it->second; }
+        return nullptr;
+    }
+
+    static MyOverlay* CreateOverlayById(const std::string& id) {
+        auto& map = GetNamedInstanceMap();
+        auto it = map.find(id);
+        if (it != map.end()) { return it->second; }
+
+        MyOverlay* p_overlay = new MyOverlay();
+        map[id] = p_overlay;
+        return p_overlay;
+    }
+
+    static bool DestroyOverlayById(const std::string& id) {
+        auto& map = GetNamedInstanceMap();
+        auto it = map.find(id);
+        if (it == map.end()) { return false; }
+
+        delete it->second;
+        map.erase(it);
+        return true;
     }
 };
 
@@ -606,6 +661,19 @@ JS_EXT_FUNC_BEGIN(CreateOverlay, 0, CREATE_FUNC_USAGE) {
 }
 JS_EXT_FUNC_END()
 
+// --- CreateOverlayById ---
+#define CREATE_BY_ID_USAGE "Usage: var id = overlay_test.overlay.CreateOverlayById(id);"
+JS_EXT_FUNC_BEGIN(CreateOverlayById, 1, CREATE_BY_ID_USAGE) {
+    string id = JS_EXT_PARA(string, 0);
+    if (id.empty()) {
+        return Napi::Boolean::From(info.Env(), false);
+    }
+
+    OverlayManager::CreateOverlayById(id);
+    JS_EXT_FUNC_ASSIGN_RET(id);
+}
+JS_EXT_FUNC_END()
+
 // --- GetEntry ---
 #define GET_ENTRY_USAGE "Usage: var entry = overlay_test.overlay.GetEntry(id);"
 JS_EXT_FUNC_BEGIN(GetEntry, 1, GET_ENTRY_USAGE) {
@@ -616,6 +684,23 @@ JS_EXT_FUNC_BEGIN(GetEntry, 1, GET_ENTRY_USAGE) {
     KMAS::Die_maker::comx::IGlContentRender* p_entry = p;
     uint64_t ullEntry = (uint64_t)((void*)p_entry);
     string strEntry = to_string(ullEntry);
+    JS_EXT_FUNC_ASSIGN_RET(strEntry);
+}
+JS_EXT_FUNC_END()
+
+// --- GetEntryById ---
+#define GET_ENTRY_BY_ID_USAGE "Usage: var entry = overlay_test.overlay.GetEntryById(id);"
+JS_EXT_FUNC_BEGIN(GetEntryById, 1, GET_ENTRY_BY_ID_USAGE) {
+    string id = JS_EXT_PARA(string, 0);
+    MyOverlay* p = OverlayManager::GetOverlayById(id);
+
+    string strEntry = "0";
+    if (p) {
+        KMAS::Die_maker::comx::IGlContentRender* p_entry = p;
+        uint64_t ullEntry = (uint64_t)((void*)p_entry);
+        strEntry = to_string(ullEntry);
+    }
+
     JS_EXT_FUNC_ASSIGN_RET(strEntry);
 }
 JS_EXT_FUNC_END()
@@ -631,6 +716,17 @@ JS_EXT_FUNC_BEGIN(DestroyOverlay, 1, DESTROY_USAGE) {
         delete p;
         map.erase(id);
     }
+    string res = "ok";
+    JS_EXT_FUNC_ASSIGN_RET(res);
+}
+JS_EXT_FUNC_END()
+
+// --- DestroyOverlayById ---
+#define DESTROY_BY_ID_USAGE "Usage: DestroyOverlayById(id);"
+JS_EXT_FUNC_BEGIN(DestroyOverlayById, 1, DESTROY_BY_ID_USAGE) {
+    string id = JS_EXT_PARA(string, 0);
+    OverlayManager::DestroyOverlayById(id);
+
     string res = "ok";
     JS_EXT_FUNC_ASSIGN_RET(res);
 }
@@ -661,6 +757,137 @@ JS_EXT_FUNC_BEGIN(SetSize, 3, SET_SIZE_USAGE) {
 }
 JS_EXT_FUNC_END()
 
+// --- SetSizeById ---
+#define SET_SIZE_BY_ID_USAGE "Usage: SetSizeById(id, w, h);"
+JS_EXT_FUNC_BEGIN(SetSizeById, 3, SET_SIZE_BY_ID_USAGE) {
+    string id = JS_EXT_PARA(string, 0);
+    int w = JS_EXT_PARA(int, 1);
+    int h = JS_EXT_PARA(int, 2);
+
+    MyOverlay* p = OverlayManager::GetOverlayById(id);
+    if (!p) {
+        p = OverlayManager::CreateOverlayById(id);
+    }
+    if (p) p->SetSize(w, h);
+
+    string res = "ok";
+    JS_EXT_FUNC_ASSIGN_RET(res);
+}
+JS_EXT_FUNC_END()
+
+// --- SetShapeById ---
+#define SET_SHAPE_BY_ID_USAGE "Usage: SetShapeById(id, shapeType);"
+JS_EXT_FUNC_BEGIN(SetShapeById, 2, SET_SHAPE_BY_ID_USAGE) {
+    string id = JS_EXT_PARA(string, 0);
+    int type = JS_EXT_PARA(int, 1);
+
+    MyOverlay* p = OverlayManager::GetOverlayById(id);
+    if (!p) {
+        p = OverlayManager::CreateOverlayById(id);
+    }
+    if (p) p->SetShape(type);
+
+    string res = "ok";
+    JS_EXT_FUNC_ASSIGN_RET(res);
+}
+JS_EXT_FUNC_END()
+
+// --- SetPositionById ---
+// 3D world position: x/y/z are model coordinates. The overlay follows this point after projection.
+#define SET_POSITION_BY_ID_USAGE "Usage: SetPositionById(id, x, y, z);"
+JS_EXT_FUNC_BEGIN(SetPositionById, 4, SET_POSITION_BY_ID_USAGE) {
+    string id = JS_EXT_PARA(string, 0);
+    int x = JS_EXT_PARA(int, 1);
+    int y = JS_EXT_PARA(int, 2);
+    int z = JS_EXT_PARA(int, 3);
+
+    MyOverlay* p = OverlayManager::GetOverlayById(id);
+    if (!p) {
+        p = OverlayManager::CreateOverlayById(id);
+    }
+    if (p) p->SetPosition(x, y, z);
+
+    string res = "ok";
+    JS_EXT_FUNC_ASSIGN_RET(res);
+}
+JS_EXT_FUNC_END()
+
+// --- SetScreenPositionById ---
+// 2D screen position: x/y are pixel coordinates in the OpenGL window.
+#define SET_SCREEN_POSITION_BY_ID_USAGE "Usage: SetScreenPositionById(id, x, y);"
+JS_EXT_FUNC_BEGIN(SetScreenPositionById, 3, SET_SCREEN_POSITION_BY_ID_USAGE) {
+    string id = JS_EXT_PARA(string, 0);
+    int x = JS_EXT_PARA(int, 1);
+    int y = JS_EXT_PARA(int, 2);
+
+    MyOverlay* p = OverlayManager::GetOverlayById(id);
+    if (!p) {
+        p = OverlayManager::CreateOverlayById(id);
+    }
+    if (p) p->SetScreenPosition(x, y);
+
+    string res = "ok";
+    JS_EXT_FUNC_ASSIGN_RET(res);
+}
+JS_EXT_FUNC_END()
+
+// --- SetBackgroundColorById ---
+#define SET_BG_COLOR_BY_ID_USAGE "Usage: SetBackgroundColorById(id, r, g, b, a);"
+JS_EXT_FUNC_BEGIN(SetBackgroundColorById, 5, SET_BG_COLOR_BY_ID_USAGE) {
+    string id = JS_EXT_PARA(string, 0);
+    float r = JS_EXT_PARA(float, 1);
+    float g = JS_EXT_PARA(float, 2);
+    float b = JS_EXT_PARA(float, 3);
+    float a = JS_EXT_PARA(float, 4);
+
+    MyOverlay* p = OverlayManager::GetOverlayById(id);
+    if (!p) {
+        p = OverlayManager::CreateOverlayById(id);
+    }
+    if (p) p->SetBackgroundColor(r, g, b, a);
+
+    string res = "ok";
+    JS_EXT_FUNC_ASSIGN_RET(res);
+}
+JS_EXT_FUNC_END()
+
+// --- SetTextColorById ---
+#define SET_TEXT_COLOR_BY_ID_USAGE "Usage: SetTextColorById(id, r, g, b, a);"
+JS_EXT_FUNC_BEGIN(SetTextColorById, 5, SET_TEXT_COLOR_BY_ID_USAGE) {
+    string id = JS_EXT_PARA(string, 0);
+    float r = JS_EXT_PARA(float, 1);
+    float g = JS_EXT_PARA(float, 2);
+    float b = JS_EXT_PARA(float, 3);
+    float a = JS_EXT_PARA(float, 4);
+
+    MyOverlay* p = OverlayManager::GetOverlayById(id);
+    if (!p) {
+        p = OverlayManager::CreateOverlayById(id);
+    }
+    if (p) p->SetTextColor(r, g, b, a);
+
+    string res = "ok";
+    JS_EXT_FUNC_ASSIGN_RET(res);
+}
+JS_EXT_FUNC_END()
+
+// --- SetTextSizeById ---
+#define SET_TEXT_SIZE_BY_ID_USAGE "Usage: SetTextSizeById(id, size);"
+JS_EXT_FUNC_BEGIN(SetTextSizeById, 2, SET_TEXT_SIZE_BY_ID_USAGE) {
+    string id = JS_EXT_PARA(string, 0);
+    int size = JS_EXT_PARA(int, 1);
+
+    MyOverlay* p = OverlayManager::GetOverlayById(id);
+    if (!p) {
+        p = OverlayManager::CreateOverlayById(id);
+    }
+    if (p) p->SetTextSize(size);
+
+    string res = "ok";
+    JS_EXT_FUNC_ASSIGN_RET(res);
+}
+JS_EXT_FUNC_END()
+
 // --- SetBackgroundColor ---
 #define SET_BG_COLOR_USAGE "Usage: SetBackgroundColor(id, r, g, b, a);"
 JS_EXT_FUNC_BEGIN(SetBackgroundColor, 5, SET_BG_COLOR_USAGE) {
@@ -683,6 +910,23 @@ JS_EXT_FUNC_BEGIN(SetText, 2, SET_TEXT_USAGE) {
     string text = JS_EXT_PARA(string, 1);
     MyOverlay* p = OverlayManager::GetOverlay(std::stoull(strId));
     if (p) p->SetTextContent(text);
+    string res = "ok";
+    JS_EXT_FUNC_ASSIGN_RET(res);
+}
+JS_EXT_FUNC_END()
+
+// --- SetTextById ---
+#define SET_TEXT_BY_ID_USAGE "Usage: SetTextById(id, text);"
+JS_EXT_FUNC_BEGIN(SetTextById, 2, SET_TEXT_BY_ID_USAGE) {
+    string id = JS_EXT_PARA(string, 0);
+    string text = JS_EXT_PARA(string, 1);
+
+    MyOverlay* p = OverlayManager::GetOverlayById(id);
+    if (!p) {
+        p = OverlayManager::CreateOverlayById(id);
+    }
+    if (p) p->SetTextContent(text);
+
     string res = "ok";
     JS_EXT_FUNC_ASSIGN_RET(res);
 }
@@ -716,7 +960,7 @@ JS_EXT_FUNC_BEGIN(SetTextColor, 5, SET_TEXT_COLOR_USAGE) {
 JS_EXT_FUNC_END()
 
 // --- SetPosition ---
-#define SET_POS_USAGE "Usage: SetPosition(id, x, y);"
+#define SET_POS_USAGE "Usage: SetPosition(id, x, y, z);"
 JS_EXT_FUNC_BEGIN(SetPosition, 4, SET_POS_USAGE) {
     string strId = JS_EXT_PARA(string, 0);
     int x = JS_EXT_PARA(int, 1);
@@ -736,14 +980,25 @@ JS_EXT_FUNC_END()
 JS_EXT_ENTRY_BEGIN()
 JS_EXT_ENTRY(setColorPostBar)
 JS_EXT_ENTRY(CreateOverlay)
+JS_EXT_ENTRY(CreateOverlayById)
 JS_EXT_ENTRY(GetEntry)
+JS_EXT_ENTRY(GetEntryById)
 JS_EXT_ENTRY(DestroyOverlay)
+JS_EXT_ENTRY(DestroyOverlayById)
 JS_EXT_ENTRY(SetShape)
+JS_EXT_ENTRY(SetShapeById)
 JS_EXT_ENTRY(SetSize)
+JS_EXT_ENTRY(SetSizeById)
+JS_EXT_ENTRY(SetPositionById)
+JS_EXT_ENTRY(SetScreenPositionById)
 JS_EXT_ENTRY(SetBackgroundColor)
+JS_EXT_ENTRY(SetBackgroundColorById)
 JS_EXT_ENTRY(SetText)
+JS_EXT_ENTRY(SetTextById)
 JS_EXT_ENTRY(SetTextSize)
+JS_EXT_ENTRY(SetTextSizeById)
 JS_EXT_ENTRY(SetTextColor)
+JS_EXT_ENTRY(SetTextColorById)
 JS_EXT_ENTRY(SetPosition)
 JS_EXT_ENTRY_END()
 
@@ -751,13 +1006,24 @@ JS_EXT_ENTRY_END()
 JS_EXT_MAIN_BEGIN(JS_EXT_NS, 1)
 JS_EXT_FUNC_REG(setColorPostBar)
 JS_EXT_FUNC_REG(CreateOverlay)
+JS_EXT_FUNC_REG(CreateOverlayById)
 JS_EXT_FUNC_REG(GetEntry)
+JS_EXT_FUNC_REG(GetEntryById)
 JS_EXT_FUNC_REG(DestroyOverlay)
+JS_EXT_FUNC_REG(DestroyOverlayById)
 JS_EXT_FUNC_REG(SetShape)
+JS_EXT_FUNC_REG(SetShapeById)
 JS_EXT_FUNC_REG(SetSize)
+JS_EXT_FUNC_REG(SetSizeById)
+JS_EXT_FUNC_REG(SetPositionById)
+JS_EXT_FUNC_REG(SetScreenPositionById)
 JS_EXT_FUNC_REG(SetBackgroundColor)
+JS_EXT_FUNC_REG(SetBackgroundColorById)
 JS_EXT_FUNC_REG(SetText)
+JS_EXT_FUNC_REG(SetTextById)
 JS_EXT_FUNC_REG(SetTextSize)
+JS_EXT_FUNC_REG(SetTextSizeById)
 JS_EXT_FUNC_REG(SetTextColor)
+JS_EXT_FUNC_REG(SetTextColorById)
 JS_EXT_FUNC_REG(SetPosition)
 JS_EXT_MAIN_END()
